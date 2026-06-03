@@ -1,8 +1,28 @@
-# DebtPal
+<p align="center">
+  <img src="icon-512.png" alt="DebtPal Logo" width="96" height="96">
+</p>
 
-DebtPal is a small local-first Progressive Web App for managing shared debts, informal expenses, and simple settlement calculations. It helps track who paid for an item, who was involved in the cost, and how the final balance should be settled between people.
+<h1 align="center">DebtPal</h1>
+
+<p align="center">
+  A local-first Progressive Web App for tracking shared debts and calculating settlements.
+</p>
+
+<p align="center">
+  <a href="https://rezadadbin.github.io/debtpal_pwa/">Open the App</a>
+</p>
+
+## Overview
+
+DebtPal is a small local-first Progressive Web App for managing shared debts, informal expenses, and settlement calculations. It helps track who paid for an item, who was involved in the cost, and how the final balance should be settled between people.
 
 The project is designed for personal use, small groups, trips, shared housing, and lightweight expense tracking where a full financial management system would be unnecessary.
+
+## Core Idea
+
+When several people share costs, the difficult part is not only recording the total amount, but also remembering who paid, who participated in each expense, and how much each person should finally receive or pay.
+
+DebtPal organizes this information into accounting groups. Each accounting group can contain multiple debt items. For every debt item, the user defines the total amount, payer or payers, involved people, date, optional notes, and share weights. The app then calculates final balances and suggests a simple settlement plan.
 
 ## Live App
 
@@ -12,20 +32,16 @@ https://rezadadbin.github.io/debtpal_pwa/
 
 After opening the link on a mobile browser, it can be installed on the device as a PWA. Once it is opened successfully online at least once, the app files are cached and the app can work offline.
 
-## Core Idea
-
-When several people share costs, the difficult part is not only recording the total amount, but also remembering who paid, who participated in each expense, and how much each person should finally receive or pay.
-
-DebtPal organizes this information into accounting groups. Each accounting group can contain multiple debt items. For every debt item, the user defines the total amount, payer or payers, involved people, date, and optional notes. The app then calculates final balances and suggests a simple settlement plan.
-
 ## Features
 
 * Create multiple accounting groups
 * Add debt items with amount, date, and notes
 * Add one or more payers for each debt item
 * Add involved people for each debt item
+* Assign custom share weights to involved people
 * Calculate final balances automatically
 * Generate a settlement plan showing who should pay whom
+* Show short share-calculation notes for unequal-share debts
 * Visualize balances with a simple chart
 * Export and import full JSON backups
 * Export and import individual accounting groups
@@ -33,21 +49,40 @@ DebtPal organizes this information into accounting groups. Each accounting group
 * Works offline after the first successful load
 * Stores data locally on the user’s device
 
-## How It Works
+## Weighted Shares
 
-DebtPal uses a simple balance-based settlement calculation.
+DebtPal supports both equal and unequal expense sharing.
+
+By default, every involved person has a share value of `1`, which means the expense is divided equally. However, each person can also be assigned a custom share value from `1` to `9`.
+
+For example, if a shared expense is `700` and two families are involved:
+
+* Family A has `4` shares
+* Family B has `3` shares
+* Total shares = `7`
+* One share = `700 / 7 = 100`
+* Family A owes `4 × 100 = 400`
+* Family B owes `3 × 100 = 300`
+
+This makes the app useful for cases where people or families should not split an expense equally.
+
+If all shares are equal, DebtPal keeps the interface clean and does not show an unnecessary calculation note. If shares are unequal, it shows a short explanation under the debt item.
+
+## How Settlement Works
+
+DebtPal uses a balance-based settlement calculation.
 
 For each debt item:
 
-1. The total amount is divided equally between the involved people.
-2. Each involved person is assigned their share as an amount they owe.
+1. The total amount is divided by the sum of all involved people’s shares.
+2. Each involved person is assigned their owed amount based on their share weight.
 3. Each payer is credited with the amount they paid.
 4. After all debt items are processed, the app calculates each person’s final balance.
 5. People with negative balances owe money.
 6. People with positive balances should receive money.
 7. DebtPal creates a simplified payment plan between debtors and creditors.
 
-For example, if one person pays for a shared expense, DebtPal distributes the cost across all involved people and determines who should reimburse whom.
+This allows DebtPal to handle equal shares, unequal shares, multiple payers, multiple debt items, and mixed settlement cases.
 
 ## Why a Local-First PWA?
 
@@ -64,7 +99,7 @@ A PWA provides the right balance:
 * it keeps data on the user’s own device,
 * and it can be deployed as simple static files.
 
-This design also improves privacy for personal use. Debt and expense data are not sent to a remote server; they remain in local browser storage on the device. If needed, the user can manually export/import JSON backups.
+This design also improves privacy for personal use. Debt and expense data are not sent to a remote server; they remain in local browser storage on the device. If needed, the user can manually export and import JSON backups.
 
 A more complex stack, such as React with a backend service, would be reasonable for a multi-user production system with synchronization, accounts, cloud backup, and collaboration. DebtPal is not trying to be that. It is a small, focused utility built to be usable quickly with minimal infrastructure.
 
@@ -92,12 +127,12 @@ When importing an accounting with an existing name, the app can handle it as a r
 
 ## Project Structure
 
-index.html
-style.css
-manifest.json
-sw.js
-icon-192.png
-icon-512.png
+* `index.html`
+* `style.css`
+* `manifest.json`
+* `sw.js`
+* `icon-192.png`
+* `icon-512.png`
 
 ## Technology
 
@@ -111,8 +146,6 @@ icon-512.png
 ## Running Locally
 
 Because this project uses separate static files and a service worker, it should be served from a local static server for proper testing. Opening `index.html` directly may display the page, but full PWA behavior and offline caching require the app to be served through HTTP or HTTPS.
-
-A simple local test can be done by serving the project folder with any static server and then opening the local address in the browser.
 
 For normal use, the hosted PWA link is recommended:
 
@@ -151,7 +184,7 @@ These limitations are intentional for the current scope. The app is meant to be 
 Possible future improvements include:
 
 * optional cloud sync,
-* better backup reminders,
+* backup reminders,
 * editable settlement rules,
 * currency labels,
 * recurring expense templates,
