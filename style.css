@@ -87,7 +87,6 @@ body {
   filter: drop-shadow(0 8px 14px rgba(0, 48, 135, 0.18));
 }
 
-
 .brand h1 {
   margin: 0;
   font-size: 28px;
@@ -348,8 +347,16 @@ button:active {
 
 .form-row-3 {
   display: grid;
-  grid-template-columns: 1fr 120px 140px;
+  grid-template-columns: 1fr 120px minmax(0, 140px);
   gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.form-row-3 > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 input, textarea, select {
@@ -366,6 +373,24 @@ input, textarea, select {
     border-color 150ms ease,
     box-shadow 150ms ease,
     background 150ms ease;
+}
+
+input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+  display: block;
+  width: 100%;
+  min-width: 0;
 }
 
 textarea {
@@ -755,6 +780,7 @@ canvas {
 
   .form-row-3 {
     grid-template-columns: 1fr;
+    overflow: visible;
   }
 
   .payer-row,
