@@ -16,7 +16,9 @@
 
 DebtPal is a lightweight Progressive Web App for managing shared expenses, debts, and settlements. It helps record who paid for each expense, who was involved, and how the final balance should be settled.
 
-The app is designed as a compact local-first utility: it runs as static files, works offline after the first successful load, and stores data locally on the device.
+The app is designed for informal shared expenses such as trips, family costs, shared housing, and small group payments.
+
+This version focuses on immediate usability: it is installable, works offline after the first successful load, and can be used without account setup or backend deployment.
 
 ## Features
 
@@ -29,6 +31,7 @@ The app is designed as a compact local-first utility: it runs as static files, w
 * Visualize balances with a simple chart
 * Export/import full backups or individual accountings
 * Installable as a Progressive Web App
+* Offline-capable after the first successful load
 * Local device storage only
 
 ## Weighted Shares
@@ -47,7 +50,7 @@ Example:
 * Family A owes `400`
 * Family B owes `300`
 
-This makes the app useful for trips, family expenses, shared housing, and other cases where equal splitting is not accurate.
+This makes the app useful when equal splitting is not accurate.
 
 ## Settlement Logic
 
@@ -59,15 +62,31 @@ For each debt item, DebtPal:
 4. Computes final balances across all debt items.
 5. Generates a simplified payment plan between debtors and creditors.
 
-## Why Local-First?
+## Development Approach
 
-DebtPal is intentionally built as a local-first PWA instead of a backend application. For a compact debt-tracking utility, user accounts, a server-side database, and backend deployment would add unnecessary complexity.
+DebtPal is currently implemented as a static local-first PWA. This choice was made to make the first usable version available quickly, with minimal setup and no dependency on a running server.
 
-The app keeps data on the user’s own device and uses JSON import/export for backups.
+Instead of requiring user accounts, backend deployment, or database configuration, the app stores data locally in the browser and supports JSON import/export for backup and transfer.
+
+This keeps the initial version simple and immediately usable on mobile devices. A backend-based version would be more appropriate for future versions with collaboration, cloud sync, authentication, and automatic backup.
 
 ## Technology
 
 HTML, CSS, Vanilla JavaScript, localStorage, Service Worker, and PWA manifest.
+
+## Future Improvements
+
+Possible future improvements include:
+
+* optional cloud synchronization
+* user accounts and authentication
+* automatic backup
+* multi-device support
+* multi-user shared accountings
+* currency labels
+* recurring expense templates
+* improved charts and reports
+* backend/database integration
 
 ## Scope
 
